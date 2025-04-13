@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-ucb-sisinfo-7376905"
+		},
+		"datos_csv_connectionString": {
+			"value": ""
+		},
+		"dw_habitaciones_password": {
+			"value": ""
+		},
+		"dw_habitaciones_properties_typeProperties_server": {
+			"value": "sql-ucb-sisinfo-7376905.database.windows.net"
+		},
+		"dw_habitaciones_properties_typeProperties_database": {
+			"value": "dw-Airbnb-Europe"
+		},
+		"dw_habitaciones_properties_typeProperties_userName": {
+			"value": "vanessa"
+		}
+	}
+}
