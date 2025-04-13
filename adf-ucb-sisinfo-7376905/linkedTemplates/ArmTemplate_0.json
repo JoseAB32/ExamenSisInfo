@@ -66,6 +66,311 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/airbnb_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "datos_csv",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Datos"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Aemf1.csv",
+						"container": "datos-airbnb-europe"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "Price",
+						"type": "String"
+					},
+					{
+						"name": "Day",
+						"type": "String"
+					},
+					{
+						"name": "Room Type",
+						"type": "String"
+					},
+					{
+						"name": "Shared Room",
+						"type": "String"
+					},
+					{
+						"name": "Private Room",
+						"type": "String"
+					},
+					{
+						"name": "Person Capacity",
+						"type": "String"
+					},
+					{
+						"name": "Superhost",
+						"type": "String"
+					},
+					{
+						"name": "Multiple Rooms",
+						"type": "String"
+					},
+					{
+						"name": "Business",
+						"type": "String"
+					},
+					{
+						"name": "Cleanliness Rating",
+						"type": "String"
+					},
+					{
+						"name": "Guest Satisfaction",
+						"type": "String"
+					},
+					{
+						"name": "Bedrooms",
+						"type": "String"
+					},
+					{
+						"name": "City Center (km)",
+						"type": "String"
+					},
+					{
+						"name": "Metro Distance (km)",
+						"type": "String"
+					},
+					{
+						"name": "Attraction Index",
+						"type": "String"
+					},
+					{
+						"name": "Normalised Attraction Index",
+						"type": "String"
+					},
+					{
+						"name": "Restraunt Index",
+						"type": "String"
+					},
+					{
+						"name": "Normalised Restraunt Index",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/datos_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_ciudad')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dw_habitaciones",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ciudad",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_CIUDAD"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_details_tipo_habitacion')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dw_habitaciones",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "tipo_habitacion",
+						"type": "varchar"
+					},
+					{
+						"name": "bedrooms",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "shared_room",
+						"type": "bit"
+					},
+					{
+						"name": "private_room",
+						"type": "bit"
+					},
+					{
+						"name": "multiple_room",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_DETAILS_TIPO_HABITACION"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_dia')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dw_habitaciones",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "dia",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_DIA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_hechos_habitaciones')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dw_habitaciones",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ciudad",
+						"type": "varchar"
+					},
+					{
+						"name": "dia",
+						"type": "varchar"
+					},
+					{
+						"name": "precio",
+						"type": "decimal",
+						"precision": 20,
+						"scale": 16
+					},
+					{
+						"name": "capacidad",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "guest_satisfaction",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "details_tipo_habitacion",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_HECHOS_HABITACIONES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_tipo_habitacion')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dw_habitaciones",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "tipo_habitacion",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_TIPO_HABITACION"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
+			]
 		}
 	]
 }
