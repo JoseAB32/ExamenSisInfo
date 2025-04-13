@@ -1,0 +1,116 @@
+{
+	"name": "df_hechos_habitaciones",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "airbnb_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_hechos_habitaciones",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          City as string,",
+				"          Price as string,",
+				"          Day as string,",
+				"          {Room Type} as string,",
+				"          {Shared Room} as string,",
+				"          {Private Room} as string,",
+				"          {Person Capacity} as integer,",
+				"          Superhost as string,",
+				"          {Multiple Rooms} as string,",
+				"          Business as string,",
+				"          {Cleanliness Rating} as string,",
+				"          {Guest Satisfaction} as integer,",
+				"          Bedrooms as integer,",
+				"          {City Center (km)} as string,",
+				"          {Metro Distance (km)} as string,",
+				"          {Attraction Index} as string,",
+				"          {Normalised Attraction Index} as string,",
+				"          {Restraunt Index} as string,",
+				"          {Normalised Restraunt Index} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          City,",
+				"          Price,",
+				"          Day,",
+				"          {Room Type},",
+				"          {Shared Room},",
+				"          {Private Room},",
+				"          {Person Capacity},",
+				"          {Multiple Rooms},",
+				"          {Guest Satisfaction},",
+				"          Bedrooms",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sort(asc(City, true)) ~> sort1",
+				"sort1 derive(Price = toFloat(replace(Price, ',', '.')),",
+				"          {Shared Room} = iif({Shared Room}==\"True\", 1, 0),",
+				"          {Private Room} = iif({Private Room}==\"True\", 1, 0)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as integer,",
+				"          ciudad as string,",
+				"          dia as string,",
+				"          tipo_habitacion as string,",
+				"          precio as decimal(20,16),",
+				"          capacidad as integer,",
+				"          guest_satisfaction as integer,",
+				"          bedrooms as integer,",
+				"          shared_room as boolean,",
+				"          private_room as boolean,",
+				"          multiple_room as boolean",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ciudad = City,",
+				"          dia = Day,",
+				"          tipo_habitacion = {Room Type},",
+				"          precio = Price,",
+				"          capacidad = {Person Capacity},",
+				"          guest_satisfaction = {Guest Satisfaction},",
+				"          bedrooms = Bedrooms,",
+				"          shared_room = {Shared Room},",
+				"          private_room = {Private Room},",
+				"          multiple_room = {Multiple Rooms}",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
