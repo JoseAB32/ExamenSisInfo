@@ -1,0 +1,24 @@
+{
+	"name": "dim_tipo_habitacion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dw_habitaciones",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dw"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "tipo_habitacion",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_TIPO_HABITACION"
+		}
+	}
+}
