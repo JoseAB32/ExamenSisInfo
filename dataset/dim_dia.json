@@ -1,0 +1,24 @@
+{
+	"name": "dim_dia",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dw_habitaciones",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dw"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dia",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_DIA"
+		}
+	}
+}
