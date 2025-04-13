@@ -4,16 +4,16 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Data Factory name",
+			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "adf-ucb-sisinfo-7376905"
 		},
 		"datos_csv_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'datos_csv'"
+			"metadata": "Cadena protegida para \"connectionString\"de \"datos_csv\""
 		},
 		"dw_habitaciones_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'dw_habitaciones'"
+			"metadata": "Cadena protegida para \"password\"de \"dw_habitaciones\""
 		},
 		"dw_habitaciones_properties_typeProperties_server": {
 			"type": "string",
@@ -205,57 +205,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dim_details_tipo_habitacion')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dw_habitaciones",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dw"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "tipo_habitacion",
-						"type": "varchar"
-					},
-					{
-						"name": "bedrooms",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "shared_room",
-						"type": "bit"
-					},
-					{
-						"name": "private_room",
-						"type": "bit"
-					},
-					{
-						"name": "multiple_room",
-						"type": "bit"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DIM_DETAILS_TIPO_HABITACION"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dim_dia')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -278,65 +227,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "DIM_DIA"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dw_habitaciones')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dim_hechos_habitaciones')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dw_habitaciones",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dw"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ciudad",
-						"type": "varchar"
-					},
-					{
-						"name": "dia",
-						"type": "varchar"
-					},
-					{
-						"name": "precio",
-						"type": "decimal",
-						"precision": 20,
-						"scale": 16
-					},
-					{
-						"name": "capacidad",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "guest_satisfaction",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "details_tipo_habitacion",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DIM_HECHOS_HABITACIONES"
 				}
 			},
 			"dependsOn": [
