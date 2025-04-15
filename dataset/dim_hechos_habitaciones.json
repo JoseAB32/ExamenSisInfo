@@ -1,0 +1,59 @@
+{
+	"name": "dim_hechos_habitaciones",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dw_habitaciones",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dw"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ciudad",
+				"type": "varchar"
+			},
+			{
+				"name": "dia",
+				"type": "varchar"
+			},
+			{
+				"name": "precio",
+				"type": "decimal",
+				"precision": 20,
+				"scale": 16
+			},
+			{
+				"name": "capacidad",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "guest_satisfaction",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_details_tipo_habitacion",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_ubicacion",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_HECHOS_HABITACIONES"
+		}
+	}
+}
